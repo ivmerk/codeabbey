@@ -36,5 +36,55 @@ For the input data 26 and 136 possible solutions are:
 using namespace std;
 int main(int argc, char *argv[])
 {
+    int max_piges; // maximum quantiy of a pigs
+    int maxpigsbreasts;
+    int tmppigsbreasts;
+    int numbers;
+    int legs, breasts;
+    cout << "\ninput data:\n";
+    cin >> numbers;
+    int res[numbers];
+    int quantitypigs, quantitygirls;
+    for (int i = 0; i < numbers; i++)
+    {
+        res[i] = 0;
+        cin >> legs >> breasts;
+        if ((legs - 2) % 4 == 0)
+        {
+            max_piges = (legs - 2) / 4;
+        }
+        else
+        {
+            max_piges = (legs - 4) / 4;
+        }
+        quantitypigs = 1;
+        maxpigsbreasts = breasts - 2;
+
+        while (quantitypigs <= max_piges)
+        {
+            quantitygirls = 1;
+            while (quantitygirls <= (legs - 4) / 2)
+            {
+                tmppigsbreasts = 2;
+                while (tmppigsbreasts <= maxpigsbreasts)
+                {
+                    if ((tmppigsbreasts * quantitypigs + 2 * quantitygirls == breasts) && (4 * quantitypigs + 2 * quantitygirls == legs))
+                    {
+                        res[i]++;
+                        break;
+                    }
+                    tmppigsbreasts++;
+                    tmppigsbreasts++;
+                }
+                quantitygirls++;
+            }
+            quantitypigs++;
+        }
+    }
+    cout << "\nanswer:\n";
+    for (int i = 0; i < numbers; i++)
+    {
+        cout << res[i] << " ";
+    }
     return 0;
 }
