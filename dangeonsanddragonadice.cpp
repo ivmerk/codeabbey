@@ -29,24 +29,26 @@ int main(int argc, char *argv[])
 {
     int numbers;
     cout << "\ninput data:\n";
-    cin >> numbers;
+    numbers = 3;
     int minOfVector;
     int sumOfVector;
     int maxOfVector;
+    int tmp;
     vector<int> data;
-    vector<char> res;
-    int tmp = 1;
+    vector<int> res1;
+    vector<int> res2;
     for (int i = 0; i < numbers; i++)
     {
+        tmp = 1;
         sumOfVector = 0;
         minOfVector = 6;
         maxOfVector = 0;
-        while (tmp != 0)
+        while (tmp != 0) // checking of minimum/maximum/sum of input data
         {
-            cin >> tmp;
+            cin >> tmp; //reading if data
             data.push_back(tmp);
             sumOfVector += tmp;
-            if (tmp < minOfVector)
+            if ((tmp != 0) && (tmp < minOfVector))
             {
                 minOfVector = tmp;
             }
@@ -55,7 +57,22 @@ int main(int argc, char *argv[])
                 maxOfVector = tmp;
             }
         }
+        res1.push_back(minOfVector);
+        if ((maxOfVector / minOfVector) % 2 == 0)
+        {
+            res2.push_back(maxOfVector / minOfVector);
+        }
+        else
+        {
+            res2.push_back(maxOfVector / minOfVector + 1);
+        }
     }
-    cout << sumOfVector;
+    cout << "\nanswer:\n";
+    for (int i = 0; i < numbers; i++)
+    {
+        cout << res1[i] << "d" << res2[i] << " ";
+    }
+    cout << "\n";
+
     return 0;
 }
