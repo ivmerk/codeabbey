@@ -44,36 +44,39 @@ answer:
 foravanad zibecefeb wagabenip wedivonow */
 #include <iostream>
 using namespace std;
-int main(){
-cout << "\n" << "input data:" << "\n";
-char consanant[] = {'b','c','d','f','g','h','j','k','l','m','n','p','r','s','t','v','w','x','z'}; // 19 letters
-char vowels[] = {'a', 'e', 'i','o','u'}; // 5 letters
-int a = 445;
-int c = 700001;
-int m = 2097152;
-int numbers, x0;
-char res;
-cin >> numbers >> x0;
-int xn = x0;
-for (int i = 0; i < numbers; i++){
-     int lettrs;
-     cin >> lettrs;
-     for (int u = 0; u < lettrs; u++){
-//          for (int n = 0; n < numbers; n++ ){
-               xn = (a*xn + c) % m;
-//               cout << xn << "\n";
-//          }
-  //        cout >> u
-          if (u%2==0) 
-               res = consanant[xn % 19];
-          else  
-          res = vowels [ xn % 5 ];
-          cout << res;
-          
+int main()
+{
+     cout << "\n"
+          << "input data:"
+          << "\n";
+     char consanant[] = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't', 'v', 'w', 'x', 'z'}; // 19 letters
+     char vowels[] = {'a', 'e', 'i', 'o', 'u'};                                                                          // 5 letters
+     int a = 445;
+     int c = 700001;
+     int m = 2097152;
+     int numbers, x0;
+     char res;
+     cin >> numbers >> x0;
+     int xn = x0;
+     for (int i = 0; i < numbers; i++)
+     {
+          int lettrs;
+          cin >> lettrs;
+          for (int u = 0; u < lettrs; u++)
+          {
+               //          for (int n = 0; n < numbers; n++ ){
+               xn = (a * xn + c) % m;
+               //               cout << xn << "\n";
+               //          }
+               //        cout >> u
+               if (u % 2 == 0)
+                    res = consanant[xn % 19];
+               else
+                    res = vowels[xn % 5];
+               cout << res;
+          }
 
+          cout << " ";
      }
-
-cout << " ";
-}
-return 0;
+     return 0;
 }
