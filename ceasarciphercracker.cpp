@@ -22,6 +22,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
     int number_of_string;
+    // vector
 
     return 0;
 }
