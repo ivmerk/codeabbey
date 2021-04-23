@@ -45,7 +45,7 @@ Here is the pseudocode:
 function partition(array, left, right)
     lt = left
     rt = right
-    dir = 'left'        #specifies at which side is currently "empty" space
+    dir = ' <left'        #specifies at which side is currently "empty" space
     pivot = array[left]
     while lt < rt
         if dir = 'left'
@@ -87,8 +87,75 @@ input data:
 answer:
 0-9 0-3 1-3 1-2 5-9 5-8 5-7  */
 #include <iostream>
+#include <vector>
 using namespace std;
+void quickSort(vector<int> &data, int left, int right)
+{
+     int tmp;
+     int service_right = right;
+     int pivot = left;
+     cout << left << "-" << right << " ";
+     while (pivot < service_right)
+     {
+          if (data[pivot] < data[service_right])
+          {
+               service_right--;
+          }
+          else
+          {
+               tmp = data[pivot];
+               data[pivot] = data[service_right];
+               data[service_right] = data[pivot + 1];
+               data[++pivot] = tmp;
+          }
+          /*
+          for (int i = left; i <= right; i++)
+          {
+               cout << data[i] << " ";
+          }
+          cout << endl;*/
+     }
+     /*if ((pivot == left) && (right - left > 1))
+     {
+          pivot++;
+          quickSort(data, pivot, right);
+     }*/
+     // if (((pivot - 1 - left > 1)) || ((pivot - 1 - left > 0) && (data[left] > data[left + 1])))
+     if ((pivot - left > 1))
+     {
+          quickSort(data, left, pivot - 1);
+     }
+     //if ((((right - pivot - 1 > 0) && (data[right] < data[right - 1])) || (right - pivot - 1 > 1)))
+     if (right - pivot > 1)
+     {
+          quickSort(data, pivot + 1, right);
+     }
+}
 int main(int argc, char **argv)
 {
-    return 0;
+     int numbers;
+     int tmp;
+     int low = 0;
+     vector<int> data;
+     cout << "\ninput data:\n";
+     cin >> numbers;
+
+     int high = numbers - 1;
+     //     new *data = new int[numbers];
+     for (int i = 0; i < numbers; i++)
+     {
+          cin >> tmp;
+          data.push_back(tmp);
+     }
+     cout << "\nanswer\n";
+     quickSort(data, low, high);
+     cout << endl;
+     for (int i = 0; i < numbers; i++)
+
+     {
+          cout << data[i] << " ";
+     }
+     cout << endl;
+     cout << endl;
+     return 0;
 }
