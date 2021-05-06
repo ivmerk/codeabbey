@@ -33,8 +33,15 @@ answer:
 #include <cmath>
 #include <vector>
 using namespace std;
+const float PI = 3.141528;
 int reciveAximutandDistamceFromLine(vector<float> azimut, vector<float> distance)
 {
+    float x = 0;
+    float y = 0;
+    for (int i = 0; i < azimut.size(); i++)
+    {
+        x = cos(azimut[i] * 180 / PI);
+    }
 }
 int main()
 {
