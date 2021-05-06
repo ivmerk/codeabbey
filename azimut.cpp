@@ -34,21 +34,34 @@ answer:
 #include <vector>
 using namespace std;
 const float PI = 3.141528;
-int reciveAximutandDistamceFromLine(vector<float> azimut, vector<float> distance)
+const string FINISH = "Dig here!";
+int reciveAximutandDistamceFromLine(vector<float> azimut, vector<float> distance) //recevie vectors with azimut and distance and show new coordanates from 0;0
 {
-    float x = 0;
-    float y = 0;
+    float x = 0.0;
+    float y = 0.0;
     for (int i = 0; i < azimut.size(); i++)
     {
-        x = cos(azimut[i] * 180 / PI);
+        x += sin(azimut[i] / 180 * PI) * distance[i];
+        y += cos(azimut[i] / 180 * PI) * distance[i];
+        cout << x << " " << y << endl;
     }
+    return 0;
 }
 int main()
 {
     float abcis = 0;
     float ordinate = 0;
-    vector<float> azimut;
-    vector<float> distance;
+    int a;
+    string buffer;
+    cout << "\nInput data:\n";
+    getline(cin, buffer);
+    while (buffer != FINISH)
+    {
+        getline(cin, buffer); /* code */
+    }
 
+    vector<float> azimut = {332.0, 78.0};
+    vector<float> distance = {140.0, 460.0};
+    a = reciveAximutandDistamceFromLine(azimut, distance);
     return 0;
 }
