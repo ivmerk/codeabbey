@@ -31,6 +31,8 @@ answer:
 384 219 */
 #include <iostream>
 #include <cmath>
+//#include "stdafx.h"
+#include <iomanip>
 #include <vector>
 using namespace std;
 const float PI = 3.141528;
@@ -43,25 +45,50 @@ int reciveAximutandDistamceFromLine(vector<float> azimut, vector<float> distance
     {
         x += sin(azimut[i] / 180 * PI) * distance[i];
         y += cos(azimut[i] / 180 * PI) * distance[i];
-        cout << x << " " << y << endl;
     }
+    cout << round(x) << " " << round(y) << endl;
     return 0;
 }
 int main()
 {
     float abcis = 0;
     float ordinate = 0;
-    int a;
+    float a;
+    vector<float> azimut;
+    vector<float> distance;
     string buffer;
     cout << "\nInput data:\n";
     getline(cin, buffer);
     while (buffer != FINISH)
     {
         getline(cin, buffer); /* code */
+        int tmp = 0;
+        a = 0.0;
+        for (int i = 0; i < buffer.size(); i++)
+        {
+
+            if (isdigit(buffer[i]))
+            {
+                tmp = tmp * 10 + buffer[i] - '0';
+                if (!isdigit(buffer[i + 1]))
+                {
+                    a = tmp * 1.0;
+                    tmp = 0;
+                }
+                if ((buffer[i + 1] == ' ') && (a != 0))
+                {
+                    distance.push_back(a);
+                    a = 0;
+                }
+                if ((buffer[i + 1] == '\0') && (a != 0))
+                {
+                    azimut.push_back(a);
+                    a = 0;
+                }
+            }
+        }
     }
 
-    vector<float> azimut = {332.0, 78.0};
-    vector<float> distance = {140.0, 460.0};
     a = reciveAximutandDistamceFromLine(azimut, distance);
     return 0;
 }
