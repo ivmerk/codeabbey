@@ -52,8 +52,28 @@ answer:
 415 46 104 58 659 440 233 41 220 110 622 831 123 55 87 587 349 139 37 247 92 554
 */
 #include <iostream>
+#include <vector>
 using namespace std;
+int getFrequence(string inData) // A1 = 55, A2 = 110, A3 = 220...
+{
+    int outData = 34;
+
+    return outData;
+}
 int main()
 {
+    int number;
+    vector<int> inputDataVector;
+    string inputData;
+    cout << "input data:" << endl;
+    cin >> number;
+    for (int i = 0; i < number; i++)
+    {
+        cin >> inputData;
+        inputDataVector.push_back(getFrequence(inputData));
+    }
+    cout << "\n"
+         << inputDataVector.size() << "\n";
+
     return 0;
 }
