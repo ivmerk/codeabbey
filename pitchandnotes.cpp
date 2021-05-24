@@ -53,12 +53,48 @@ answer:
 */
 #include <iostream>
 #include <vector>
+#include <cmath>
 using namespace std;
 int getFrequence(string inData) // A1 = 55, A2 = 110, A3 = 220...
 {
-    int outData = 34;
+    char note = inData[0];
+    int numberOfNote;
+    double outData = 34.0;
+    outData = inData[inData.size() - 1] - '0';
+    outData = pow(2.0, (outData - 1.0)) * 55.0;
+    switch (note)
+    {
+    case 'A':
+        numberOfNote = 9;
+        break;
+    case 'B':
+        numberOfNote = 11;
+        break;
+    case 'C':
+        numberOfNote = 0;
+        break;
+    case 'D':
+        numberOfNote = 2;
+        break;
+    case 'E':
+        numberOfNote = 4;
+        break;
+    case 'F':
+        numberOfNote = 5;
+        break;
+    case 'G':
+        numberOfNote = 7;
+        break;
+    default:
+        break;
+    }
+    if (inData[1] == '#')
+    {
+        numberOfNote++;
+    }
+    outData *= pow(2.0, ((double)(numberOfNote - 9) / 12.0));
 
-    return outData;
+    return round(outData);
 }
 int main()
 {
@@ -72,8 +108,14 @@ int main()
         cin >> inputData;
         inputDataVector.push_back(getFrequence(inputData));
     }
-    cout << "\n"
-         << inputDataVector.size() << "\n";
+
+    cout << "\nanswer:\n";
+    for (int i = 0; i < inputDataVector.size(); i++)
+    {
+
+        cout << inputDataVector[i] << " ";
+    }
+    cout << "\n";
 
     return 0;
 }
