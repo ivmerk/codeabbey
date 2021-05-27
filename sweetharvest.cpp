@@ -57,12 +57,15 @@ int getAmountOfCandies(vector<int> data)
         }
         for (int i = 0; i < placeOfTheRebbit.size(); i++)
         {
-            if (placeOfTheRebbit[i] != (data.size() - 1))
+            if (placeOfTheRebbit[i] < (data.size() - 2))
             {
                 result = 0;
                 break;
             }
-            result = amountOfTheRebbit[i];
+            if (result < amountOfTheRebbit[i])
+            {
+                result = amountOfTheRebbit[i];
+            }
         }
     }
 
@@ -101,6 +104,7 @@ int main()
 {
     int number;
     vector<int> data;
+    vector<int> result;
     string tmp;
     cout << "\ninput data:\n";
     cin >> number;
@@ -109,7 +113,13 @@ int main()
     {
         getline(cin, tmp);
         getVectorFromString(tmp, data);
-        getAmountOfCandies(data);
+        result.push_back(getAmountOfCandies(data));
+        data.clear();
+    }
+    cout << "\nanswer\n";
+    for (int i = 0; i < result.size(); i++)
+    {
+        cout << result[i] << " ";
     }
     return 0;
 }
