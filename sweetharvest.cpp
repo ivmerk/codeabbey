@@ -26,9 +26,90 @@ input data:
 
 answer:
 48 157 */
-#include <iostream>>
+#include <iostream>
+#include <string>
+#include <vector>
+
 using namespace std;
+int getAmountOfCandies(vector<int> data)
+{
+    int result = 0;
+    vector<int> placeOfTheRebbit;
+    vector<int> amountOfTheRebbit;
+    int lengthTmp;
+    placeOfTheRebbit.push_back(0);
+    amountOfTheRebbit.push_back(data[0]);
+    while (!result)
+    {
+        lengthTmp = placeOfTheRebbit.size();
+        for (int i = 0; i < lengthTmp; i++)
+        {
+            if (placeOfTheRebbit[i] <= (data.size() - 3))
+            {
+                placeOfTheRebbit[i] += 2;
+                amountOfTheRebbit[i] += data[placeOfTheRebbit[i]];
+                if (placeOfTheRebbit[i] <= (data.size() - 2))
+                {
+                    placeOfTheRebbit.push_back(placeOfTheRebbit[i] + 1);
+                    amountOfTheRebbit.push_back(data[placeOfTheRebbit[i] + 1] - data[placeOfTheRebbit[i]] + amountOfTheRebbit[i]);
+                }
+            }
+        }
+        for (int i = 0; i < placeOfTheRebbit.size(); i++)
+        {
+            if (placeOfTheRebbit[i] != (data.size() - 1))
+            {
+                result = 0;
+                break;
+            }
+            result = amountOfTheRebbit[i];
+        }
+    }
+
+    return result;
+}
+void getVectorFromString(string input, vector<int> &output)
+{
+    //  vector <int> output;
+    int tmp;
+    if ((input[0] <= '9') && (input[0] >= '0') && (input[1] <= '9') && (input[1] >= '0'))
+    {
+        tmp = (input[0] - '0') * 10 + (input[1] - '0');
+        output.push_back(tmp);
+    }
+    if ((input[0] <= '9') && (input[0] >= '0') && (input[1] == ' '))
+    {
+        tmp = (input[0] - '0');
+        output.push_back(tmp);
+    }
+
+    for (int i = 2; i < input.size(); i++)
+    {
+        if ((input[i] <= '9') && (input[i] >= '0') && (input[i + 1] <= '9') && (input[i + 1] >= '0'))
+        {
+            tmp = (input[i] - '0') * 10 + (input[i + 1] - '0');
+            output.push_back(tmp);
+        }
+        if ((input[i] <= '9') && (input[i] >= '0') && (input[i - 1] == ' ') && ((input[i + 1] == ' ') || (input[i + 1] == '\0')))
+        {
+            tmp = (input[i] - '0');
+            output.push_back(tmp);
+        }
+    }
+}
 int main()
 {
+    int number;
+    vector<int> data;
+    string tmp;
+    cout << "\ninput data:\n";
+    cin >> number;
+    cin.ignore();
+    for (int i = 0; i < number; i++)
+    {
+        getline(cin, tmp);
+        getVectorFromString(tmp, data);
+        getAmountOfCandies(data);
+    }
     return 0;
 }
