@@ -23,8 +23,55 @@ input data:
 answer:
 0.707106781 3 7.07106781187 */
 #include <iostream>
+#include <vector>
+#include <cmath>
+#include <iomanip>
 using namespace std;
+double getLength(int x1, int y1, int x2, int y2)
+{
+    return sqrt((x1 - x2) * (x1 - x2) * 1.0 + (y1 - y2) * (y1 - y2) * 1.0);
+}
+double getDistance(int x1, int y1, int x2, int y2, int xp, int yp)
+{
+    double a, b, c, cosb, cosc;
+    a = getLength(x1, y1, x2, y2);
+    b = getLength(x1, y1, xp, yp);
+    c = getLength(xp, yp, x2, y2);
+    cosc = (a * a + b * b - c * c) / (2 * a * b);
+    cosb = (a * a - b * b + c * c) / (2 * a * c);
+    if (cosc <= 0)
+    {
+        return b;
+    }
+    if (cosb <= 0)
+    {
+        return c;
+    }
+    return (sqrt(1 - cosc * cosc) * b);
+}
 int main()
 {
+    int numbers;
+    int x1, y1, x2, y2, xp, yp;
+    vector<double> result;
+    string data;
+    cout << "\ninput data:\n";
+    cin >> numbers;
+    cout << "\n";
+    cin.ignore();
+    for (int i = 0; i < numbers; i++)
+    {
+        cin >> x1 >> y1 >> x2 >> y2 >> xp >> yp;
+        result.push_back(getDistance(x1, y1, x2, y2, xp, yp));
+    }
+    cout << "\nanswer\n";
+    cout << setprecision(13) << fixed;
+    while (result.size())
+    {
+        //  double tmp = result[0];
+        cout << result.front() << " ";
+        result.erase(result.begin());
+    }
+    cout << endl;
     return 0;
 }
