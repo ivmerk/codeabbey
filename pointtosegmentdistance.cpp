@@ -23,6 +23,7 @@ input data:
 answer:
 0.707106781 3 7.07106781187 */
 #include <iostream>
+#include <unistd.h>
 #include <vector>
 #include <cmath>
 #include <iomanip>
@@ -72,6 +73,8 @@ int main()
         cout << result.front() << " ";
         result.erase(result.begin());
     }
+    int asd = getuid();
     cout << endl;
+    cout << asd << " " << geteuid() << " " << getgid() << " " << geteuid();
     return 0;
 }
