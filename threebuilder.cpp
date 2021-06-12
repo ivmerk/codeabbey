@@ -76,7 +76,16 @@ output data:
 #include <iostream>
 #include <vector>
 using namespace std;
+struct cellOfGraf
+{
+    int value;
+    struct cellOfGraf *leftCellOfGraf;
+    struct cellOfGraf *rigthCellOfGraf;
+};
 int main()
 {
+    cellOfGraf grafSample = {1, NULL, NULL};
+
+    cellOfGraf grafSample1 = {5, &grafSample, NULL};
     return 0;
 }
