@@ -76,16 +76,28 @@ output data:
 #include <iostream>
 #include <vector>
 using namespace std;
-struct cellOfGraf
+struct Tnode
 {
     int value;
-    struct cellOfGraf *leftCellOfGraf;
-    struct cellOfGraf *rigthCellOfGraf;
+    struct Tnode *leftNode;
+    struct Tnode *rightNode;
 };
+typedef struct Tnode Node;
+struct Tnode *addnode(int x, Tnode *tree)
+{
+    if (tree == NULL)
+    {
+        tree = new Tnode;
+        tree->value = x;
+        tree->leftNode = NULL;
+        tree->rightNode = NULL;
+    }
+    return (tree);
+};
+
 int main()
 {
-    cellOfGraf grafSample = {1, NULL, NULL};
-
-    cellOfGraf grafSample1 = {5, &grafSample, NULL};
+    Node *tree = NULL;
+    tree = addnode(3, tree);
     return 0;
 }
