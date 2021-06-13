@@ -85,12 +85,20 @@ struct Tnode
 typedef struct Tnode Node;
 struct Tnode *addnode(int x, Tnode *tree)
 {
-    if (tree == NULL)
+    if (tree == NULL) // проверяем есть ли корень\узел, если нет то заполняем
     {
         tree = new Tnode;
         tree->value = x;
         tree->leftNode = NULL;
         tree->rightNode = NULL;
+    }
+    else if (x < tree->value) // корень есть рекурсией породвигаемя по узлам
+    {
+        tree->leftNode = addnode(x, tree->leftNode);
+    }
+    else
+    {
+        tree->rightNode = addnode(x, tree->rightNode);
     }
     return (tree);
 };
@@ -98,6 +106,14 @@ struct Tnode *addnode(int x, Tnode *tree)
 int main()
 {
     Node *tree = NULL;
-    tree = addnode(3, tree);
+    int number;
+    cout << "\ninput data\n";
+    cin >> number;
+    int data;
+    for (int i = 0; i < number; i++)
+    {
+        cin >> data;
+        tree = addnode(data, tree);
+    }
     return 0;
 }
