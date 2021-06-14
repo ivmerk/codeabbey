@@ -102,7 +102,21 @@ struct Tnode *addnode(int x, Tnode *tree)
     }
     return (tree);
 };
-
+void printTree(Tnode *tree)
+{
+    if (tree != NULL)
+    {
+        cout << "(";
+        printTree(tree->leftNode);
+        cout << "," << tree->value << ",";
+        printTree(tree->rightNode);
+        cout << ")";
+    }
+    else
+    {
+        cout << "-";
+    }
+};
 int main()
 {
     Node *tree = NULL;
@@ -115,5 +129,8 @@ int main()
         cin >> data;
         tree = addnode(data, tree);
     }
+    cout << "\noutput data\n";
+    printTree(tree);
+    cout << endl;
     return 0;
 }
