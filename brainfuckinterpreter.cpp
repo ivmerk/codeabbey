@@ -22,8 +22,28 @@ input data:
 answer:
 0 8 */
 #include <iostream>
+#include <vector>
+#include <sstream>
+#include <limits>
+#include <string>
 using namespace std;
-int main()
+int main(int argc, char *argv[])
 {
+    vector<int> figuresData;
+    vector<char> programmData;
+    string tmp, tmp1;
+    int tmpInt;
+    bool isCorrect = true;
+    cout << "\ninput data:\n";
+    cin >> tmp;
+
+    getline(cin, tmp1);
+    //    getline(cin, tmp1);
+
+    while (cin.peek() != '\n')
+    {
+        cin >> tmpInt;
+        figuresData.push_back(tmpInt);
+    }
     return 0;
 }
