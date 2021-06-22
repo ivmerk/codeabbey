@@ -25,25 +25,105 @@ answer:
 #include <vector>
 #include <sstream>
 #include <limits>
+#include <stack>
 #include <string>
 using namespace std;
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
     vector<int> figuresData;
-    vector<char> programmData;
+    string programmData;
+    vector<char> programmDataForFuncion;
+    vector<int> result;
+    stack<char> steck;
+    int ram[100];
+    int pointerOfTheRam = 0;
     string tmp, tmp1;
     int tmpInt;
+    for (int i = 0; i < 100; i++)
+    {
+        ram[i] = 0;
+    }
     bool isCorrect = true;
     cout << "\ninput data:\n";
-    cin >> tmp;
-
-    getline(cin, tmp1);
-    //    getline(cin, tmp1);
-
-    while (cin.peek() != '\n')
+    cin >> programmData;
+    getline(cin, tmp);
+    while ((cin.peek() != '\n') && (cin.peek() != '\0'))
     {
         cin >> tmpInt;
         figuresData.push_back(tmpInt);
     }
+    int openBurk = 0;
+    for (int i = 0; i < programmData.size(); i++)
+    {
+        switch (programmData[i])
+        {
+        case ';':
+            ram[pointerOfTheRam] = figuresData.front();
+            figuresData.erase(figuresData.begin());
+            break;
+        case '>':
+            pointerOfTheRam++;
+            break;
+        case '<':
+            pointerOfTheRam--;
+            break;
+        case '+':
+            ram[pointerOfTheRam]++;
+            break;
+        case '-':
+            ram[pointerOfTheRam]--;
+            break;
+        case '[':
+            if (!ram[pointerOfTheRam])
+            {
+                openBurk++;
+                while (openBurk)
+                {
+                    i++;
+                    if (programmData[i] == ']')
+                    {
+                        openBurk--;
+                    }
+                    if (programmData[i] == '[')
+                    {
+                        openBurk++;
+                    }
+                }
+            }
+            break;
+        case ']':
+            if (ram[pointerOfTheRam])
+            {
+                openBurk++;
+                while (openBurk)
+                {
+                    i--;
+                    if (programmData[i] == ']')
+                    {
+                        openBurk++;
+                    }
+                    if (programmData[i] == '[')
+                    {
+                        openBurk--;
+                    }
+                }
+                i--;
+            }
+            break;
+        case ':':
+            result.push_back(ram[pointerOfTheRam]);
+            break;
+        default:
+            break;
+        }
+    }
+
+    cout << "\nanswer:\n";
+    while (result.size())
+    {
+        cout << result.front() << " ";
+        result.erase(result.begin());
+    }
+    cout << endl;
     return 0;
 }
