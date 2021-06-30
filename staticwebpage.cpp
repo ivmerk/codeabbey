@@ -22,8 +22,19 @@ input data:
 answer:
 http://codeabbey.github.io/data/static-web-page.txt */
 #include <iostream>
+#include <signal.h>
 using namespace std;
+int n = 0;
+void handler(int s)
+{
+    n++;
+    cout << "Press one again, I like it\n";
+}
 int main(int argc, char **argv)
 {
+    signal(SIGINT, handler);
+    while (n < 25)
+        ;
+
     return 0;
 }
