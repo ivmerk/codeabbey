@@ -52,9 +52,42 @@ answer:
 802 */
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <cmath>
+#include <vector>
 using namespace std;
 int main()
 {
+    string data;
+    int index = 0;
+    int serviceDigit = 0;
+    vector<int> stack;
     cout << "\ninput data:\n";
+    getline(cin, data);
+    while (data[index] != '\0')
+    {
+        while (isdigit(data[index]))
+        {
+            serviceDigit *= 10;
+            serviceDigit += data[index] - '0';
+            if (!isdigit(data[++index]))
+            {
+                stack.push_back(serviceDigit);
+                serviceDigit = 0;
+            }
+        }
+        if (islower(data[index]))
+        {
+            if ((data[index] == 's') && (data[index + 1]) == 'q')
+                ; // sqrt()
+            {
+                int tmp = (int)sqrt((double)stack.back());
+                stack.pop_back();
+                stack.push_back(tmp);
+                index += 4;
+            }
+        }
+        index++;
+    }
     return 0;
 }
