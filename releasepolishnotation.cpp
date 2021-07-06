@@ -76,18 +76,62 @@ int main()
                 serviceDigit = 0;
             }
         }
-        if (islower(data[index]))
+        if ((data[index] == 's') && (data[index + 1]) == 'q') // sqrt()
         {
-            if ((data[index] == 's') && (data[index + 1]) == 'q')
-                ; // sqrt()
-            {
-                int tmp = (int)sqrt((double)stack.back());
-                stack.pop_back();
-                stack.push_back(tmp);
-                index += 4;
-            }
+            int tmp = (int)sqrt((double)stack.back());
+            stack.pop_back();
+            stack.push_back(tmp);
+            index += 4;
+        }
+        if ((data[index] == 'm') && (data[index + 1]) == 'u') // multiplication()
+        {
+            int tmp = stack.back();
+            stack.pop_back();
+            tmp *= stack.back();
+            stack.pop_back();
+            stack.push_back(tmp);
+            index += 3;
+        }
+        if ((data[index] == 'a') && (data[index + 1]) == 'd') // addition()
+        {
+            int tmp = stack.back();
+            stack.pop_back();
+            tmp += stack.back();
+            stack.pop_back();
+            stack.push_back(tmp);
+            index += 3;
+        }
+        if ((data[index] == 's') && (data[index + 1]) == 'u') // subtraction()
+        {
+            int tmp = stack.back();
+            stack.pop_back();
+            tmp = stack.back() - tmp;
+            stack.pop_back();
+            stack.push_back(tmp);
+            index += 3;
+        }
+        if ((data[index] == 'd') && (data[index + 1]) == 'i') // div()
+        {
+            int tmp = stack.back();
+            stack.pop_back();
+            tmp = stack.back() / tmp;
+            stack.pop_back();
+            stack.push_back(tmp);
+            index += 3;
+        }
+        if ((data[index] == 'm') && (data[index + 1]) == 'o') // remainder()
+        {
+            int tmp = stack.back();
+            stack.pop_back();
+            tmp = stack.back() % tmp;
+            stack.pop_back();
+            stack.push_back(tmp);
+            index += 3;
         }
         index++;
     }
+    cout << "\nanswer:\n"
+         << stack.back() << endl;
+    stack.pop_back();
     return 0;
 }
