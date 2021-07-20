@@ -58,6 +58,41 @@ int main()
     vector<int> year;
     vector<int> x;
     vector<int> y;
-
+    int begin, end;
+    int rangeofyear, xincome, yincome;
+    double k = 0.0;
+    double b = 0.0;
+    double tmpa = 0.0;
+    double tmpb = 0.0;
+    double avaragex = 0.0;
+    double avaragey = 0.0;
+    cout << "\ninput data\n";
+    cin >> begin >> end;
+    int datayear = begin;
+    string yearincome;
+    while (datayear <= end)
+    {
+        cin >> yearincome >> xincome >> yincome;
+        year.push_back(datayear);
+        x.push_back(xincome);
+        y.push_back(yincome);
+        avaragex += xincome;
+        avaragey += yincome;
+        datayear++;
+    }
+    avaragex /= (end - begin + 1);
+    avaragey /= (end - begin + 1);
+    while (x.size())
+    {
+        tmpa += (x.back() * 1.0 - avaragex) * (y.back() * 1.0 - avaragey);
+        tmpb += (x.back() * 1.0 - avaragex) * (x.back() * 1.0 - avaragex);
+        x.pop_back();
+        y.pop_back();
+    }
+    k = tmpa / tmpb;
+    b = avaragey - k * avaragex;
+    cout.precision(17);
+    cout << "\nanswer\n";
+    cout << fixed << k << " " << b << endl;
     return 0;
 }
