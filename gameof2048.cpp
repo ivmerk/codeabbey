@@ -33,3 +33,31 @@ D R D L U
 
 answer:
 0 2 2 1 */
+#include <iostream>
+#include <vector>
+using namespace std;
+class Field
+{
+    int a[4][4];
+    //move to right
+    Field moveToTheRight(Field right)
+    {
+        bool stringIsComplete;
+        for (int i = 0; i < 4; i++)
+        {
+            int numberOfElement;
+            while (!stringIsComplete)
+            {
+                numberOfElement = 3;
+                if (a[i][numberOfElement])
+                {
+                                }
+            }
+        }
+    }
+};
+int main(int argc, char argv[])
+{
+
+    return 0;
+}
