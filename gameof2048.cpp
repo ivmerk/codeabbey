@@ -35,29 +35,69 @@ answer:
 0 2 2 1 */
 #include <iostream>
 #include <vector>
+#include <string>
 using namespace std;
-class Field
+void moveToTheRight(int *right)
 {
-    int a[4][4];
-    //move to right
-    Field moveToTheRight(Field right)
+    bool stringIsComplete = false;
+    for (int i = 0; i < 4; i++)
     {
-        bool stringIsComplete;
-        for (int i = 0; i < 4; i++)
+        int numberOfElement;
+        while (!stringIsComplete)
         {
-            int numberOfElement;
-            while (!stringIsComplete)
+            numberOfElement = 3;
+            for (int n = 3; n > 0; n--)
             {
-                numberOfElement = 3;
-                if (a[i][numberOfElement])
+                if (right[i + n] == right[i + n - 1])
                 {
-                                }
+                    right[i + n] = right[i + n] + right[i + n];
+                    if (n > 1)
+                    {
+                        right[i + n - 1] = right[i + n - 2];
+                    }
+                    else
+                    {
+                        right[i + n - 1] = 0;
+                    }
+                }
+            }
+            if (!right[i + numberOfElement])
+            {
+                while (!numberOfElement)
+                {
+                    right[i + numberOfElement] = right[i + numberOfElement - 1];
+                    right[i + numberOfElement - 1] = 0;
+                    numberOfElement--;
+                }
+            }
+            else
+            {
+                stringIsComplete = true;
             }
         }
     }
-};
-int main(int argc, char argv[])
+}
+int main(int argc, char **argv)
 {
+    int dataArr[16];
+    cout << "\ninput data\n";
+    string tmp;
+    vector<char> directionOfMoving;
+    int index = 0;
+    //  cin.get();
+    for (int i = 0; i < 4; i++)
+    {
+        getline(cin, tmp);
+        int n = 0;
+        while (n != '\n')
+        {
+            if (isdigit(tmp[n++]))
+            {
+                dataArr[index++] = tmp[n - 1] - '0';
+            }
+        }
+    }
 
+    getline(cin, tmp);
     return 0;
 }
