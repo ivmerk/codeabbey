@@ -63,7 +63,7 @@ int main(int argc, char **argv)
     }
 
     getline(cin, tmp);
-    moveToTheRight(dataArr);
+    moveToTheDown(dataArr);
     return 0;
 }
 void moveToTheRight(int *right)
@@ -114,7 +114,7 @@ void moveToTheDown(int *down)
         }
     }
 }
-void moveToTheRight(int *right)
+/*void moveToTheRight(int *right)
 {
     for (int i = 0; i < 4; i++)
     {
@@ -161,4 +161,4 @@ void moveToTheRight(int *right)
             }
         }
     }
-}
+}*/
