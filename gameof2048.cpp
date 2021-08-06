@@ -37,46 +37,10 @@ answer:
 #include <vector>
 #include <string>
 using namespace std;
-void moveToTheRight(int *right)
-{
-    bool stringIsComplete = false;
-    for (int i = 0; i < 4; i++)
-    {
-        int numberOfElement;
-        while (!stringIsComplete)
-        {
-            numberOfElement = 3;
-            for (int n = 3; n > 0; n--)
-            {
-                if (right[i + n] == right[i + n - 1])
-                {
-                    right[i + n] = right[i + n] + right[i + n];
-                    if (n > 1)
-                    {
-                        right[i + n - 1] = right[i + n - 2];
-                    }
-                    else
-                    {
-                        right[i + n - 1] = 0;
-                    }
-                }
-            }
-            if (!right[i + numberOfElement])
-            {
-                while (!numberOfElement)
-                {
-                    right[i + numberOfElement] = right[i + numberOfElement - 1];
-                    right[i + numberOfElement - 1] = 0;
-                    numberOfElement--;
-                }
-            }
-            else
-            {
-                stringIsComplete = true;
-            }
-        }
-    }
-}
+void moveToTheRight(int *right);
+void moveToTheDown(int *down);
+void moveToTheUp(int *up);
+void moveToTheLeft(int *left);
 int main(int argc, char **argv)
 {
     int dataArr[16];
@@ -99,5 +63,102 @@ int main(int argc, char **argv)
     }
 
     getline(cin, tmp);
+    moveToTheRight(dataArr);
     return 0;
+}
+void moveToTheRight(int *right)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int n = 3; n > 0; n--)
+        {
+            if (!right[i * 4 + n])
+            {
+                right[i * 4 + n] = right[i * 4 + n - 1];
+                right[i * 4 + n - 1] = 0;
+                if (n > 1)
+                {
+                    right[i * 4 + n - 1] = right[i * 4 + n - 2];
+                    right[i * 4 + n - 2] = 0;
+                }
+            }
+            if ((right[i * 4 + n] == right[i * 4 + n - 1]) && (right[i * 4 + n]))
+            {
+                right[i * 4 + n] = right[i * 4 + n] + right[i * 4 + n];
+                right[i * 4 + n - 1] = 0;
+            }
+        }
+    }
+}
+void moveToTheDown(int *down)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int n = 3; n > 0; n--)
+        {
+            if (!down[i + n * 4])
+            {
+                down[i + n * 4] = down[i + (n - 1) * 4];
+                down[i + (n - 1) * 4] = 0;
+                if (n > 1)
+                {
+                    down[i + (n - 1) * 4] = down[i + (n - 2) * 4];
+                    down[i + (n - 2) * 4] = 0;
+                }
+            }
+            if ((down[i + n * 4] == down[i + (n - 1) * 4]) && (down[i + n * 4]))
+            {
+                down[i + n * 4] *= 2;
+                down[i + (n - 1) * 4] = 0;
+            }
+        }
+    }
+}
+void moveToTheRight(int *right)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int n = 3; n > 0; n--)
+        {
+            if (!right[i * 4 + n])
+            {
+                right[i * 4 + n] = right[i * 4 + n - 1];
+                right[i * 4 + n - 1] = 0;
+                if (n > 1)
+                {
+                    right[i * 4 + n - 1] = right[i * 4 + n - 2];
+                    right[i * 4 + n - 2] = 0;
+                }
+            }
+            if ((right[i * 4 + n] == right[i * 4 + n - 1]) && (right[i * 4 + n]))
+            {
+                right[i * 4 + n] = right[i * 4 + n] + right[i * 4 + n];
+                right[i * 4 + n - 1] = 0;
+            }
+        }
+    }
+}
+void moveToTheRight(int *right)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int n = 3; n > 0; n--)
+        {
+            if (!right[i * 4 + n])
+            {
+                right[i * 4 + n] = right[i * 4 + n - 1];
+                right[i * 4 + n - 1] = 0;
+                if (n > 1)
+                {
+                    right[i * 4 + n - 1] = right[i * 4 + n - 2];
+                    right[i * 4 + n - 2] = 0;
+                }
+            }
+            if ((right[i * 4 + n] == right[i * 4 + n - 1]) && (right[i * 4 + n]))
+            {
+                right[i * 4 + n] = right[i * 4 + n] + right[i * 4 + n];
+                right[i * 4 + n - 1] = 0;
+            }
+        }
+    }
 }
