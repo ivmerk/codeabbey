@@ -63,7 +63,7 @@ int main(int argc, char **argv)
     }
 
     getline(cin, tmp);
-    moveToTheDown(dataArr);
+    moveToTheUp(dataArr);
     return 0;
 }
 void moveToTheRight(int *right)
@@ -114,31 +114,36 @@ void moveToTheDown(int *down)
         }
     }
 }
-/*void moveToTheRight(int *right)
+void moveToTheUp(int *up)
 {
-    for (int i = 0; i < 4; i++)
+    for (int rowNumber = 3; rowNumber >= 0; rowNumber--)
     {
-        for (int n = 3; n > 0; n--)
+        int stringNumber = 0;
+        while (stringNumber < 3)
         {
-            if (!right[i * 4 + n])
+            if (up[stringNumber * 4 + rowNumber])
             {
-                right[i * 4 + n] = right[i * 4 + n - 1];
-                right[i * 4 + n - 1] = 0;
-                if (n > 1)
+                if (up[(stringNumber + 1) * 4 + rowNumber] == up[stringNumber * 4 + rowNumber])
                 {
-                    right[i * 4 + n - 1] = right[i * 4 + n - 2];
-                    right[i * 4 + n - 2] = 0;
+                    up[(stringNumber)*4 + rowNumber] *= 2;
+                    up[(stringNumber + 1) * 4 + rowNumber] = 0;
                 }
             }
-            if ((right[i * 4 + n] == right[i * 4 + n - 1]) && (right[i * 4 + n]))
+            else
             {
-                right[i * 4 + n] = right[i * 4 + n] + right[i * 4 + n];
-                right[i * 4 + n - 1] = 0;
+                up[(stringNumber)*4 + rowNumber] = up[(stringNumber + 1) * 4 + rowNumber];
+                up[(stringNumber + 1) * 4 + rowNumber] = 0;
+                if (stringNumber < 2)
+                {
+                    up[(stringNumber + 1) * 4 + rowNumber] = up[(stringNumber + 2) * 4 + rowNumber];
+                    up[(stringNumber + 2) * 4 + rowNumber] = 0;
+                }
             }
+            stringNumber++;
         }
     }
 }
-void moveToTheRight(int *right)
+/*void moveToTheRight(int *right)
 {
     for (int i = 0; i < 4; i++)
     {
