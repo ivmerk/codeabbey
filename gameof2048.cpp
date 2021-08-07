@@ -63,7 +63,7 @@ int main(int argc, char **argv)
     }
 
     getline(cin, tmp);
-    moveToTheUp(dataArr);
+    moveToTheLeft(dataArr);
     return 0;
 }
 void moveToTheRight(int *right)
@@ -143,27 +143,37 @@ void moveToTheUp(int *up)
         }
     }
 }
-/*void moveToTheRight(int *right)
+void moveToTheLeft(int *left)
 {
-    for (int i = 0; i < 4; i++)
+    for (int rowNumber = 0; rowNumber < 3; rowNumber++)
     {
-        for (int n = 3; n > 0; n--)
+        int stringNumber = 0;
+        while (stringNumber < 4)
         {
-            if (!right[i * 4 + n])
+            if (left[stringNumber * 4 + rowNumber])
             {
-                right[i * 4 + n] = right[i * 4 + n - 1];
-                right[i * 4 + n - 1] = 0;
-                if (n > 1)
+                if (left[(stringNumber)*4 + rowNumber + 1] == left[stringNumber * 4 + rowNumber])
                 {
-                    right[i * 4 + n - 1] = right[i * 4 + n - 2];
-                    right[i * 4 + n - 2] = 0;
+                    left[(stringNumber)*4 + rowNumber] *= 2;
+                    left[(stringNumber)*4 + rowNumber + 1] = 0;
                 }
             }
-            if ((right[i * 4 + n] == right[i * 4 + n - 1]) && (right[i * 4 + n]))
+            else
             {
-                right[i * 4 + n] = right[i * 4 + n] + right[i * 4 + n];
-                right[i * 4 + n - 1] = 0;
+                left[(stringNumber)*4 + rowNumber] = left[(stringNumber)*4 + rowNumber + 1];
+                left[(stringNumber)*4 + rowNumber + 1] = 0;
+                if (rowNumber < 2)
+                {
+                    left[(stringNumber)*4 + rowNumber + 1] = left[(stringNumber)*4 + rowNumber + 2];
+                    left[(stringNumber)*4 + rowNumber + 2] = 0;
+                }
+                if (left[(stringNumber)*4 + rowNumber + 1] == left[stringNumber * 4 + rowNumber])
+                {
+                    left[(stringNumber)*4 + rowNumber] *= 2;
+                    left[(stringNumber)*4 + rowNumber + 1] = 0;
+                }
             }
+            stringNumber++;
         }
     }
-}*/
+}
