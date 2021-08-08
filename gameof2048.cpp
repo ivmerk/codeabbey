@@ -47,7 +47,10 @@ int main(int argc, char **argv)
     cout << "\ninput data\n";
     string tmp;
     vector<char> directionOfMoving;
+    vector<int> qttOfFigures;
+    bool isArrEmpti = false;
     int index = 0;
+    int figure = 1;
     //  cin.get();
     for (int i = 0; i < 4; i++)
     {
@@ -63,117 +66,343 @@ int main(int argc, char **argv)
     }
 
     getline(cin, tmp);
-    moveToTheLeft(dataArr);
+    while (tmp[0] != '\0')
+    {
+        if (tmp[0] == ' ')
+        {
+            tmp.erase(tmp.begin());
+            continue;
+        }
+        if (tmp[0] == 'D')
+        {
+            moveToTheDown(dataArr);
+            tmp.erase(tmp.begin());
+            continue;
+        }
+        if (tmp[0] == 'R')
+        {
+            moveToTheRight(dataArr);
+            tmp.erase(tmp.begin());
+            continue;
+        }
+        if (tmp[0] == 'U')
+        {
+            moveToTheUp(dataArr);
+            tmp.erase(tmp.begin());
+            continue;
+        }
+        if (tmp[0] == 'L')
+        {
+            moveToTheLeft(dataArr);
+            tmp.erase(tmp.begin());
+            continue;
+        }
+    }
+    while (!(isArrEmpti))
+    {
+        figure *= 2;
+        int tmp = 0;
+        isArrEmpti = true;
+        for (int row = 0; row < 4; row++)
+        {
+            for (int string = 0; string < 4; string++)
+            {
+                if (dataArr[string * 4 + row] == figure)
+                {
+                    tmp++;
+                    dataArr[string * 4 + row] = 0;
+                }
+                if (dataArr[string * 4 + row])
+                {
+
+                    isArrEmpti = false;
+                }
+            }
+        }
+        qttOfFigures.push_back(tmp);
+    }
+    //qttOfFigures.pop_back();
+    cout << "\nanswer:\n";
+    while (!(qttOfFigures.empty()))
+    {
+        cout << qttOfFigures[0] << " ";
+        qttOfFigures.erase(qttOfFigures.begin());
+    }
+    cout << endl;
+
     return 0;
 }
 void moveToTheRight(int *right)
 {
-    for (int i = 0; i < 4; i++)
+    for (int string = 0; string < 4; string++)
     {
-        for (int n = 3; n > 0; n--)
+        bool stringComplete = false;
+        while (!stringComplete)
         {
-            if (!right[i * 4 + n])
+            for (int row = 3; row > 0; row--)
             {
-                right[i * 4 + n] = right[i * 4 + n - 1];
-                right[i * 4 + n - 1] = 0;
-                if (n > 1)
+                if (!right[string * 4 + row])
                 {
-                    right[i * 4 + n - 1] = right[i * 4 + n - 2];
-                    right[i * 4 + n - 2] = 0;
+                    stringComplete = true;
+                }
+                else
+                {
+                    stringComplete = false;
+                    break;
                 }
             }
-            if ((right[i * 4 + n] == right[i * 4 + n - 1]) && (right[i * 4 + n]))
+            if (stringComplete == true)
             {
-                right[i * 4 + n] = right[i * 4 + n] + right[i * 4 + n];
-                right[i * 4 + n - 1] = 0;
+                break;
             }
+            while ((!right[string * 4 + 3]) && ((right[string * 4 + 2]) || (right[string * 4 + 1]) || (right[string * 4])))
+            {
+                right[string * 4 + 3] = right[string * 4 + 2];
+                right[string * 4 + 2] = right[string * 4 + 1];
+                right[string * 4 + 1] = right[string * 4];
+                right[string * 4] = 0;
+            }
+            while ((!right[string * 4 + 2]) && ((right[string * 4 + 1]) || (right[string * 4])))
+            {
+                right[string * 4 + 2] = right[string * 4 + 1];
+                right[string * 4 + 1] = right[string * 4];
+                right[string * 4] = 0;
+            }
+            while ((!right[string * 4 + 1]) && ((right[string * 4])))
+            {
+                right[string * 4 + 1] = right[string * 4];
+                right[string * 4] = 0;
+            }
+            for (int row = 3; row > 0; row--)
+
+            {
+                if (right[string * 4 + row])
+                {
+                    if (right[string * 4 + row] == right[string * 4 + row - 1])
+                    {
+                        right[string * 4 + row] *= 2;
+                        right[string * 4 + row - 1] = 0;
+                        if (row == 3)
+                        {
+                            right[string * 4 + row - 1] = right[string * 4 + row - 2];
+                            right[string * 4 + row - 2] = right[string * 4 + row - 3];
+                            right[string * 4 + row - 3] = 0;
+                        }
+                        if (row == 2)
+                        {
+                            right[string * 4 + row - 1] = right[string * 4 + row - 2];
+                            right[string * 4 + row - 2] = 0;
+                        }
+                    }
+                }
+            }
+            stringComplete = true;
         }
     }
 }
 void moveToTheDown(int *down)
 {
-    for (int i = 0; i < 4; i++)
+    for (int row = 0; row < 4; row++)
     {
-        for (int n = 3; n > 0; n--)
+        bool rowComplete = false;
+        while (!rowComplete)
         {
-            if (!down[i + n * 4])
+            for (int string = 3; string > 0; string--)
             {
-                down[i + n * 4] = down[i + (n - 1) * 4];
-                down[i + (n - 1) * 4] = 0;
-                if (n > 1)
+                if (!down[string * 4 + row])
                 {
-                    down[i + (n - 1) * 4] = down[i + (n - 2) * 4];
-                    down[i + (n - 2) * 4] = 0;
+                    rowComplete = true;
+                }
+                else
+                {
+                    rowComplete = false;
+                    break;
                 }
             }
-            if ((down[i + n * 4] == down[i + (n - 1) * 4]) && (down[i + n * 4]))
+            if (rowComplete == true)
             {
-                down[i + n * 4] *= 2;
-                down[i + (n - 1) * 4] = 0;
+                break;
             }
+            while ((!down[3 * 4 + row]) && ((down[2 * 4 + row]) || (down[4 + row]) || (down[row])))
+            {
+                down[3 * 4 + row] = down[2 * 4 + row];
+                down[2 * 4 + row] = down[4 + row];
+                down[4 + row] = down[row];
+                down[row] = 0;
+            }
+            while ((!down[2 * 4 + row]) &&
+                   ((down[4 + row]) ||
+                    (down[row])))
+            {
+                down[2 * 4 + row] = down[4 + row];
+                down[4 + row] = down[row];
+                down[row] = 0;
+            }
+            while ((!down[4 + row]) && (down[row]))
+            {
+                down[4 + row] = down[row];
+                down[row] = 0;
+            }
+            for (int string = 3; string > 0; string--)
+            {
+                if (down[string * 4 + row])
+                {
+                    if (down[string * 4 + row] == down[(string - 1) * 4 + row])
+                    {
+                        down[string * 4 + row] *= 2;
+                        down[(string - 1) * 4 + row] = 0;
+                        if (string == 3)
+                        {
+                            down[(string - 1) * 4 + row] = down[(string - 2) * 4 + row];
+                            down[(string - 2) * 4 + row] = down[(string - 3) * 4 + row];
+                            down[(string - 3) * 4 + row] = 0;
+                        }
+                        if (string == 2)
+                        {
+                            down[(string - 1) * 4 + row] = down[(string - 2) * 4 + row];
+                            down[(string - 2) * 4 + row] = 0;
+                        }
+                    }
+                }
+            }
+            rowComplete = true;
         }
     }
 }
 void moveToTheUp(int *up)
 {
-    for (int rowNumber = 3; rowNumber >= 0; rowNumber--)
+    for (int row = 0; row < 4; row++)
     {
-        int stringNumber = 0;
-        while (stringNumber < 3)
+        bool rowComplete = false;
+        while (!rowComplete)
         {
-            if (up[stringNumber * 4 + rowNumber])
+            for (int string = 3; string > 0; string--)
             {
-                if (up[(stringNumber + 1) * 4 + rowNumber] == up[stringNumber * 4 + rowNumber])
+                if (!up[string * 4 + row])
                 {
-                    up[(stringNumber)*4 + rowNumber] *= 2;
-                    up[(stringNumber + 1) * 4 + rowNumber] = 0;
+                    rowComplete = true;
+                }
+                else
+                {
+                    rowComplete = false;
+                    break;
                 }
             }
-            else
+            if (rowComplete == true)
             {
-                up[(stringNumber)*4 + rowNumber] = up[(stringNumber + 1) * 4 + rowNumber];
-                up[(stringNumber + 1) * 4 + rowNumber] = 0;
-                if (stringNumber < 2)
+                break;
+            }
+            while ((!up[row]) && ((up[4 + row]) || (up[2 * 4 + row]) || (up[3 * 4 + row])))
+            {
+                up[row] = up[4 + row];
+                up[4 + row] = up[2 * 4 + row];
+                up[2 * 4 + row] = up[3 * 4 + row];
+                up[3 * 4 + row] = 0;
+            }
+            while ((!up[4 + row]) &&
+                   ((up[2 * 4 + row]) ||
+                    (up[3 * 4 + row])))
+            {
+                up[4 + row] = up[4 * 2 + row];
+                up[4 * 2 + row] = up[3 * 4 + row];
+                up[3 * 4 + row] = 0;
+            }
+            while ((!up[2 * 4 + row]) && (up[3 * 4 + row]))
+            {
+                up[2 * 4 + row] = up[3 * 4 + row];
+                up[3 * 4 + row] = 0;
+            }
+            for (int string = 0; string < 3; string++)
+            {
+                if (up[string * 4 + row])
                 {
-                    up[(stringNumber + 1) * 4 + rowNumber] = up[(stringNumber + 2) * 4 + rowNumber];
-                    up[(stringNumber + 2) * 4 + rowNumber] = 0;
+                    if (up[string * 4 + row] == up[(string + 1) * 4 + row])
+                    {
+                        up[string * 4 + row] *= 2;
+                        up[(string + 1) * 4 + row] = 0;
+                        if (string == 0)
+                        {
+                            up[(string + 1) * 4 + row] = up[(string + 2) * 4 + row];
+                            up[(string + 2) * 4 + row] = up[(string + 3) * 4 + row];
+                            up[(string + 3) * 4 + row] = 0;
+                        }
+                        if (string == 1)
+                        {
+                            up[(string + 1) * 4 + row] = up[(string + 2) * 4 + row];
+                            up[(string + 2) * 4 + row] = 0;
+                        }
+                    }
                 }
             }
-            stringNumber++;
+            rowComplete = true;
         }
     }
 }
 void moveToTheLeft(int *left)
 {
-    for (int rowNumber = 0; rowNumber < 3; rowNumber++)
+    for (int string = 0; string < 4; string++)
     {
-        int stringNumber = 0;
-        while (stringNumber < 4)
+        bool stringComplete = false;
+        while (!stringComplete)
         {
-            if (left[stringNumber * 4 + rowNumber])
+            for (int row = 3; row > 0; row--)
             {
-                if (left[(stringNumber)*4 + rowNumber + 1] == left[stringNumber * 4 + rowNumber])
+                if (!left[string * 4 + row])
                 {
-                    left[(stringNumber)*4 + rowNumber] *= 2;
-                    left[(stringNumber)*4 + rowNumber + 1] = 0;
+                    stringComplete = true;
+                }
+                else
+                {
+                    stringComplete = false;
+                    break;
                 }
             }
-            else
+            if (stringComplete == true)
             {
-                left[(stringNumber)*4 + rowNumber] = left[(stringNumber)*4 + rowNumber + 1];
-                left[(stringNumber)*4 + rowNumber + 1] = 0;
-                if (rowNumber < 2)
+                break;
+            }
+            while ((!left[string * 4]) && ((left[string * 4 + 1])))
+            {
+                left[string * 4] = left[string * 4 + 1];
+                left[string * 4 + 1] = left[string * 4 + 2];
+                left[string * 4 + 2] = left[string * 4 + 3];
+                left[string * 4 + 3] = 0;
+            }
+            while ((!left[string * 4 + 1]) && ((left[string * 4 + 2])))
+            {
+                left[string * 4 + 1] = left[string * 4 + 2];
+                left[string * 4 + 2] = left[string * 4 + 3];
+                left[string * 4 + 3] = 0;
+            }
+            while (((!left[string * 4 + 2]) && ((left[string * 4 + 3]))))
+            {
+                left[string * 4 + 2] = left[string * 4 + 3];
+                left[string * 4 + 3] = 0;
+            }
+            for (int row = 0; row < 3; row++)
+
+            {
+                if (left[string * 4 + row])
                 {
-                    left[(stringNumber)*4 + rowNumber + 1] = left[(stringNumber)*4 + rowNumber + 2];
-                    left[(stringNumber)*4 + rowNumber + 2] = 0;
-                }
-                if (left[(stringNumber)*4 + rowNumber + 1] == left[stringNumber * 4 + rowNumber])
-                {
-                    left[(stringNumber)*4 + rowNumber] *= 2;
-                    left[(stringNumber)*4 + rowNumber + 1] = 0;
+                    if (left[string * 4 + row] == left[string * 4 + row + 1])
+                    {
+                        left[string * 4 + row] *= 2;
+                        left[string * 4 + row + 1] = 0;
+                        if (row == 0)
+                        {
+                            left[string * 4 + row + 1] = left[string * 4 + row + 2];
+                            left[string * 4 + row + 2] = left[string * 4 + row + 3];
+                            left[string * 4 + row + 3] = 0;
+                        }
+                        if (row == 1)
+                        {
+                            left[string * 4 + row + 1] = left[string * 4 + row + 2];
+                            left[string * 4 + row + 2] = 0;
+                        }
+                    }
                 }
             }
-            stringNumber++;
+            stringComplete = true;
         }
     }
 }
