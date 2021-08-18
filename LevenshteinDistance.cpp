@@ -37,10 +37,45 @@ YPOEHOHRIWUBXMNHZF YCPOEHORIDUBXNHZF
 answer:
 1 1 1 3 4
 Note: this algorithm works good for languages where words are pronounced similarly to how they are spelled, like Italian, Russian, German etc. However, it is not very good for English, where women is pronounced like weeman etc., so the English have more special and complicated algorithms, like Soundex.*/
-#include "inputdata.hpp"
+//#include "inputdata.hpp"
 #include <iostream>
 #include <vector>
+#include <string.h>
+using namespace std;
 int main(int argc, char *argv[])
 {
+    vector<int> result;
+    int number;
+    vector<char> wordFirst, wordSecond;
+    string datastring;
+    cout << "\ninput data:\n";
+    cin >> number;
+    cin.ignore();
+    for (int i = 0; i < number; i++)
+    {
+        getline(cin, datastring);
+        while (datastring.size())
+        {
+            if ((datastring[0] != ' ') && (!wordSecond.size()))
+            {
+                wordFirst.push_back(datastring[0]);
+                datastring.erase(0, 1);
+            }
+            else
+            {
+                if (!wordSecond.size())
+                {
+                    datastring.erase(0, 1);
+                    wordSecond.push_back(datastring[0]);
+                    datastring.erase(0, 1);
+                }
+                else
+                {
+                    wordSecond.push_back(datastring[0]);
+                    datastring.erase(0, 1);
+                }
+            }
+        }
+    }
     return 0;
 }
