@@ -76,6 +76,116 @@ int main(int argc, char *argv[])
                 }
             }
         }
+        result.push_back(0);
+        while (wordFirst.size() || wordSecond.size())
+        {
+            if (wordFirst.back() == wordSecond.back())
+            {
+                wordFirst.pop_back();
+                wordSecond.pop_back();
+            }
+            else
+            {
+
+                if ((wordSecond.size() == 1) && (wordFirst.size() == 1))
+                {
+                    wordFirst.pop_back();
+                    wordSecond.pop_back();
+                    result.back()++;
+                }
+                else
+                {
+                    if (!wordFirst.size())
+                    {
+                        result.back()++;
+                        wordSecond.pop_back();
+                    }
+                    else
+                    {
+                        if (!wordSecond.size())
+                        {
+                            result.back()++;
+                            wordFirst.pop_back();
+                        }
+                        else
+                        {
+                            while (((wordFirst.back() == wordFirst[wordFirst.size() - 2]) && (wordSecond[wordSecond.size() - 2]) == wordFirst.back()) || ((wordSecond.back() == wordSecond[wordSecond.size() - 2]) && (wordFirst[wordFirst.size() - 2]) == wordSecond.back()))
+                            {
+                                wordFirst.erase(wordFirst.end() - 2);
+                                wordSecond.erase(wordSecond.end() - 2);
+                            }
+                            if ((wordFirst[wordFirst.size() - 2] == wordSecond.back()) && (wordFirst.back() != wordSecond[wordSecond.size() - 2]))
+
+                            {
+                                wordFirst.pop_back();
+                                wordFirst.pop_back();
+                                wordSecond.pop_back();
+                                result.back()++;
+                            }
+                            else
+                            {
+
+                                if (wordSecond[wordSecond.size() - 2] == wordFirst.back())
+                                {
+                                    wordFirst.pop_back();
+                                    wordSecond.pop_back();
+                                    wordSecond.pop_back();
+                                    result.back()++;
+                                }
+                                else
+                                {
+                                    bool finish = false;
+                                    int indexFirst = 0;
+                                    int indexSecond = 0;
+                                    while (!finish)
+                                    {
+                                        if (wordFirst.back() == wordSecond[wordSecond.size() - (++indexSecond + 1)])
+                                        {
+                                            wordSecond.erase(wordSecond.end() - indexSecond, wordSecond.end());
+                                            while (indexSecond)
+                                            {
+                                                indexSecond--;
+                                                result.back()++;
+                                                finish = true;
+                                            }
+                                        }
+                                        if (wordSecond.back() == wordFirst[wordFirst.size() - (++indexFirst + 1)])
+                                        {
+                                            wordFirst.erase(wordFirst.end() - indexFirst, wordFirst.end());
+                                            while (indexFirst)
+                                            {
+                                                indexFirst--;
+                                                result.back()++;
+                                                finish = true;
+                                            }
+                                        }
+                                        if (wordSecond[wordSecond.size() - (indexSecond + 1)] == wordFirst[wordFirst.size() - (indexFirst + 1)])
+                                        {
+                                            wordFirst.erase(wordFirst.end() - indexFirst, wordFirst.end());
+                                            wordSecond.erase(wordSecond.end() - indexSecond, wordSecond.end());
+                                            while (indexFirst)
+                                            {
+                                                indexFirst--;
+                                                result.back()++;
+                                                finish = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+
+    cout << "\nanswer:\n";
+    while (result.size())
+    {
+        cout << result.front() << ' '; /* code */
+        result.erase(result.begin());
+    }
+    cout << endl;
     return 0;
 }
