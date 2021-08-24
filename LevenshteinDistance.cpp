@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
                                     bool finish = false;
                                     int indexFirst = 0;
                                     int indexSecond = 0;
-                                    while (!finish)
+                                    while ((!finish) || indexFirst < 3)
                                     {
                                         if (wordFirst.back() == wordSecond[wordSecond.size() - (++indexSecond + 1)])
                                         {
