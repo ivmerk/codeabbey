@@ -45,10 +45,13 @@ answer:
 #include <vector>
 #include <string>
 using namespace std;
+vector<char> findTheWay(int widthStart, int highStart, int widthOfTheField, int highOfTheField, bool field[], vector<char> result);
+void vectorOptimization(vector<char> &result);
 int main(int argc, char *argv[])
 {
     int widthOfTheField, highOfTheField;
     string datastring;
+    vector<char> result;
     cout << "\ninput data:\n";
     cin >> widthOfTheField >> highOfTheField;
     bool *field = new bool[widthOfTheField * highOfTheField]();
@@ -61,14 +64,91 @@ int main(int argc, char *argv[])
             field[i * widthOfTheField + j] = datastring[j] - '0';
         }
     }
-    for (int i = 0; i < highOfTheField; i++)
+
+    /*for (int i = 0; i < highOfTheField; i++)
     {
         cout << "\n";
         for (int j = 0; j < widthOfTheField; j++)
         {
             cout << field[i * widthOfTheField + j];
         }
-    }
+    }*/
+    result = findTheWay(0, highOfTheField - 1, widthOfTheField, highOfTheField, field, result);
+
     cout << "\n";
     return 0;
+}
+vector<char> findTheWay(int widthStart, int highStart, int widthOfTheField, int highOfTheField, bool field[], vector<char> result)
+{
+    if (widthStart || highStart)
+    {
+        vector<char> newResult;
+        if (((highStart - 1) >= 0) && (field[widthOfTheField * (highStart - 1) + widthStart]))
+        {
+            bool *newField = new bool[widthOfTheField * highOfTheField]();
+            field[widthOfTheField * (highStart) + widthStart] = false;
+            field[widthOfTheField * (highStart - 1) + widthStart] = false;
+            newField = field;
+            newField[widthOfTheField * (highStart) + widthStart] = false;
+            result.push_back('U');
+            newResult = findTheWay(widthStart, highStart - 1, widthOfTheField, highOfTheField, newField, result);
+            delete[] newField;
+            return newResult;
+        }
+        else
+        {
+            if (((highStart + 1) < highOfTheField) &&
+                (field[widthOfTheField * (highStart + 1) + widthStart]))
+            {
+                bool *newField = new bool[widthOfTheField * highOfTheField]();
+                field[widthOfTheField * (highStart) + widthStart] = false;
+                field[widthOfTheField * (highStart + 1) + widthStart] = false;
+                newField = field;
+                newField[widthOfTheField * (highStart) + widthStart] = false;
+                result.push_back('D');
+                result = findTheWay(widthStart, highStart + 1, widthOfTheField, highOfTheField, newField, result);
+                delete[] newField;
+                return result;
+            }
+            else
+            {
+                if (((widthStart - 1) >= 0) && (field[widthOfTheField * highStart + widthStart - 1]))
+                {
+                    bool *newField = new bool[widthOfTheField * highOfTheField]();
+                    field[widthOfTheField * (highStart) + widthStart] = false;
+                    field[widthOfTheField * (highStart) + widthStart - 1] = false;
+                    newField = field;
+                    newField[widthOfTheField * (highStart) + widthStart] = false;
+                    result.push_back('L');
+                    result = findTheWay(widthStart - 1, highStart, widthOfTheField, highOfTheField, field, result);
+                    delete[] newField;
+                    return result;
+                }
+                else
+                {
+
+                    if (((widthStart + 1) < widthOfTheField) &&
+                        (field[widthOfTheField * highStart + widthStart + 1]))
+                    {
+                        bool *newField = new bool[widthOfTheField * highOfTheField]();
+                        field[widthOfTheField * (highStart) + widthStart] = false;
+                        field[widthOfTheField * (highStart) + widthStart + 1] = false;
+                        newField = field;
+                        newField[widthOfTheField * (highStart) + widthStart] = false;
+                        result.push_back('R');
+                        result = findTheWay(widthStart + 1, highStart, widthOfTheField, highOfTheField, field, result);
+                        delete[] newField;
+                        return result;
+                    }
+
+                    else
+                    {
+                        result.push_back('T');
+                        return result;
+                    }
+                }
+            }
+        }
+    }
+    return result;
 }
